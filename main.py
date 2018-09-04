@@ -34,4 +34,5 @@ def predata_fft(xls):
 xls = pd.read_excel("traning_source/20160419001_2016419_114348.xls", index_col=None, header=None)
 result = predata(xls)
 # for i in result:
+print(result)
 print(len(result))
