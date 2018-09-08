@@ -69,12 +69,12 @@ X_train, X_test, y_train, y_test = train_test_split(trsresult, trsfileans, test_
 regressor = LinearRegression()
 regressor.fit(X_train,y_train)
 #取得截距。如果公式是y=a+bx，a即是截距
-print('訓練組截距 '+str(regressor.intercept_))
+print('result intercept '+str(regressor.intercept_))
 
 #使用測試組資料來預測結果
 y_pred = regressor.predict(X_test)
-print('訓練組預測結果 '+str(y_pred))
-print('訓練組測試數據 '+str(y_test))
+print('traning predict result '+str(y_pred))
+print('traning test result '+str(y_test))
 #比較實際及預測的關係
 # plt.scatter(y_test,y_pred)
 # plt.show()
@@ -87,8 +87,8 @@ print('訓練組測試數據 '+str(y_test))
 
 #Root Mean Squared Error (RMSE)代表MSE的平方根。比起MSE更為常用，因為更容易解釋y。
 RMSE = np.sqrt(metrics.mean_squared_error(y_test,y_pred))
-print('訓練組RMSE '+str(RMSE))
+print('traning RMSE '+str(RMSE))
 
 # 10 組品質量預測數據
 try_pred = regressor.predict(tesresult)
-print('測試組預測結果 '+str(try_pred))
+print('10 file testing predict result'+str(try_pred))
