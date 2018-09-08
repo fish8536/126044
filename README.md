@@ -2,13 +2,12 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+### This repository for competition ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Ubuntu 16.04.5 LTS
+* Python 3.5.2
 
-### How do I get set up? ###
+### Install. package ###
 
 * Summary of set up
 * Configuration
@@ -17,13 +16,17 @@ This README would normally document whatever steps are necessary to get your app
 * How to run tests
 * Deployment instructions
 
-### Contribution guidelines ###
+### Execution ###
 
-* Writing tests
-* Code review
+* cd ~/126044/
+* paython3 main.py 
 * Other guidelines
 
-### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+### Code review ###
+
+* 1. Import package
+* 2. Data preprocessing
+* 3. Multiple-Linear Regression model learning
+* 4. Evaluation
+* 5. Test result
