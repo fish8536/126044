@@ -32,14 +32,15 @@ def col_split(col):
 def col_max_average(col):
 	columns = []
 	for i in range(0,5):
-		columns.append(np.amax(col[i]))
+		# columns.append(np.amax(col[i]))
 		columns.append(np.average(col[i]))
+		columns.append(np.std(col[i]))
 	return columns
 # 40 file, 4 sensor, 5 fft max and avg
-tsresult = np.zeros((40, 40))
-tsfileans = []
+trsresult = np.zeros((40, 40))
+trsfileans = []
 tran_folder="traning_source/"
-tfi = 0
+trfi = 0
 for f in listdir(tran_folder):
 	if isfile(join(tran_folder, f)):
 		xls = read_xls(tran_folder+f)
@@ -47,23 +48,36 @@ for f in listdir(tran_folder):
 		fcolumns = []
 		for fc in range(4):
 			fcolumns.extend(col_max_average(col_split(predata_fft(pxls[fc]))))
-		tsresult[tfi] = fcolumns
-		tsfileans.append(float(xls[0][7500].split(':')[1]))
-		tfi=tfi+1
+		trsresult[trfi] = fcolumns
+		trsfileans.append(float(xls[0][7500].split(':')[1]))
+		trfi=trfi+1
+# 10 file, 4 sensor, 5 fft max and avg
+tesresult = np.zeros((10, 40))
+tran_folder="testing_source/"
+tefi = 0
+for f in listdir(tran_folder):
+	if isfile(join(tran_folder, f)):
+		xls = read_xls(tran_folder+f)
+		pxls = predata(xls)
+		fcolumns = []
+		for fc in range(4):
+			fcolumns.extend(col_max_average(col_split(predata_fft(pxls[fc]))))
+		tesresult[tefi] = fcolumns
+		tefi=tefi+1
 
-X_train, X_test, y_train, y_test = train_test_split(tsresult, tsfileans, test_size = 0.1, random_state = 0)
+X_train, X_test, y_train, y_test = train_test_split(trsresult, trsfileans, test_size = 0.1, random_state = 40)
 regressor = LinearRegression()
 regressor.fit(X_train,y_train)
 #取得截距。如果公式是y=a+bx，a即是截距
-print('截距 '+str(regressor.intercept_))
+print('訓練組截距 '+str(regressor.intercept_))
 
 #使用測試組資料來預測結果
 y_pred = regressor.predict(X_test)
-print('預測結果 '+str(y_pred))
-
+print('訓練組預測結果 '+str(y_pred))
+print('訓練組測試數據 '+str(y_test))
 #比較實際及預測的關係
-plt.scatter(y_test,y_pred)
-plt.show()
+# plt.scatter(y_test,y_pred)
+# plt.show()
 
 #看實際值及預測值之間的殘差分佈圖
 
@@ -73,4 +87,8 @@ plt.show()
 
 #Root Mean Squared Error (RMSE)代表MSE的平方根。比起MSE更為常用，因為更容易解釋y。
 RMSE = np.sqrt(metrics.mean_squared_error(y_test,y_pred))
-print('RMSE '+str(RMSE))
+print('訓練組RMSE '+str(RMSE))
+
+# 10 組品質量預測數據
+try_pred = regressor.predict(tesresult)
+print('測試組預測結果 '+str(try_pred))
